@@ -2,8 +2,8 @@
 
 namespace Tests;
 
-use Funbox\Framework\Container\Container;
-use Funbox\Framework\Container\Exceptions\ContainerException;
+use Bolero\Framework\Container\Container;
+use Bolero\Framework\Container\Exceptions\ContainerException;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 

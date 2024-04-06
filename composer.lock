@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e2fcb25dd63b4cbe31f50f789aec34f0",
+    "content-hash": "62d7d853025770e4d25b1ff45f33d6c8",
     "packages": [
         {
             "name": "doctrine/dbal",
@@ -843,12 +843,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "b46e93c7257fb01b7c77768210997b1e00643b91"
+                "reference": "64ee590d469227705cb4bad179cbda90241511ac"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/b46e93c7257fb01b7c77768210997b1e00643b91",
-                "reference": "b46e93c7257fb01b7c77768210997b1e00643b91",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/64ee590d469227705cb4bad179cbda90241511ac",
+                "reference": "64ee590d469227705cb4bad179cbda90241511ac",
                 "shasum": ""
             },
             "require": {
@@ -915,7 +915,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-02-15T11:09:06+00:00"
+            "time": "2024-04-03T15:08:28+00:00"
         }
     ],
     "packages-dev": [
@@ -1488,16 +1488,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "dev-main",
+            "version": "11.1.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "130337928499f8b5e431d18459c22d62124ec373"
+                "reference": "816cb6070af901c0548aa5f18f2132fd8a6e4ade"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/130337928499f8b5e431d18459c22d62124ec373",
-                "reference": "130337928499f8b5e431d18459c22d62124ec373",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/816cb6070af901c0548aa5f18f2132fd8a6e4ade",
+                "reference": "816cb6070af901c0548aa5f18f2132fd8a6e4ade",
                 "shasum": ""
             },
             "require": {
@@ -1530,7 +1530,6 @@
             "suggest": {
                 "ext-soap": "To be able to generate mocks based on WSDL files"
             },
-            "default-branch": true,
             "bin": [
                 "phpunit"
             ],
@@ -1569,7 +1568,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
                 "security": "https://github.com/sebastianbergmann/phpunit/security/policy",
-                "source": "https://github.com/sebastianbergmann/phpunit/tree/main"
+                "source": "https://github.com/sebastianbergmann/phpunit/tree/11.1.1"
             },
             "funding": [
                 {
@@ -1585,7 +1584,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-03-28T10:10:53+00:00"
+            "time": "2024-04-06T06:20:21+00:00"
         },
         {
             "name": "sebastian/cli-parser",
@@ -1593,12 +1592,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/cli-parser.git",
-                "reference": "1cb1276290d9478d8480a20ed5a79b4d23f53c1d"
+                "reference": "47c93ee55891788203dcb8efefa5abe46472266b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/cli-parser/zipball/1cb1276290d9478d8480a20ed5a79b4d23f53c1d",
-                "reference": "1cb1276290d9478d8480a20ed5a79b4d23f53c1d",
+                "url": "https://api.github.com/repos/sebastianbergmann/cli-parser/zipball/47c93ee55891788203dcb8efefa5abe46472266b",
+                "reference": "47c93ee55891788203dcb8efefa5abe46472266b",
                 "shasum": ""
             },
             "require": {
@@ -1643,7 +1642,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-03-22T13:38:23+00:00"
+            "time": "2024-04-04T08:53:05+00:00"
         },
         {
             "name": "sebastian/code-unit",
@@ -1651,12 +1650,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/code-unit.git",
-                "reference": "f88cb9e934eb57509cb1220efa7f13815a99390e"
+                "reference": "2a4919d2c7eb2e17379ea1e878fc8c176042ecf4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/code-unit/zipball/f88cb9e934eb57509cb1220efa7f13815a99390e",
-                "reference": "f88cb9e934eb57509cb1220efa7f13815a99390e",
+                "url": "https://api.github.com/repos/sebastianbergmann/code-unit/zipball/2a4919d2c7eb2e17379ea1e878fc8c176042ecf4",
+                "reference": "2a4919d2c7eb2e17379ea1e878fc8c176042ecf4",
                 "shasum": ""
             },
             "require": {
@@ -1701,7 +1700,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-03-22T13:38:42+00:00"
+            "time": "2024-04-03T07:55:50+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",
@@ -2036,12 +2035,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/exporter.git",
-                "reference": "e58279a4edf115838b64b4fab75e4ff333753de9"
+                "reference": "b9c7cad904c5c2596beb29ceb8fb794be3edc539"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/exporter/zipball/e58279a4edf115838b64b4fab75e4ff333753de9",
-                "reference": "e58279a4edf115838b64b4fab75e4ff333753de9",
+                "url": "https://api.github.com/repos/sebastianbergmann/exporter/zipball/b9c7cad904c5c2596beb29ceb8fb794be3edc539",
+                "reference": "b9c7cad904c5c2596beb29ceb8fb794be3edc539",
                 "shasum": ""
             },
             "require": {
@@ -2107,7 +2106,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-03-22T13:45:25+00:00"
+            "time": "2024-04-04T06:31:26+00:00"
         },
         {
             "name": "sebastian/global-state",
@@ -2353,12 +2352,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/recursion-context.git",
-                "reference": "4a206545a00b0773edf4c056dd712bb96ac5487e"
+                "reference": "396fdbbdb95420649b3d0c4766b992da686c22fc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/recursion-context/zipball/4a206545a00b0773edf4c056dd712bb96ac5487e",
-                "reference": "4a206545a00b0773edf4c056dd712bb96ac5487e",
+                "url": "https://api.github.com/repos/sebastianbergmann/recursion-context/zipball/396fdbbdb95420649b3d0c4766b992da686c22fc",
+                "reference": "396fdbbdb95420649b3d0c4766b992da686c22fc",
                 "shasum": ""
             },
             "require": {
@@ -2410,7 +2409,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-03-22T13:53:14+00:00"
+            "time": "2024-03-29T09:41:38+00:00"
         },
         {
             "name": "sebastian/type",

@@ -1,24 +1,25 @@
 {
-  "name": "larelev/funbox",
-  "description": "description",
-  "minimum-stability": "dev",
-  "license": "GPL-3.0-only",
-  "authors": [
-    {
-      "name": "David Blanchard",
-      "email": "dpjb@hotmail.fr"
-    }
-  ],
+  "name": "larelev/bolero-framework",
+  "type": "library",
+  "description": "Professional PHP experiments",
+  "license": "GPL-3.0+",
+  "version": "0.1.0",
   "autoload": {
     "psr-4": {
-      "Funbox\\": "Funbox/"
+      "Bolero\\": "src/"
     }
   },
+  "authors": [{
+    "name": "David Blanchard",
+    "email": "dpjb@hotmail.fr",
+    "role": "Creator"
+  }],
   "autoload-dev": {
     "psr-4": {
-     "Funbox\\Framework\\Tests\\": "tests/"
+      "Bolero\\Framework\\Tests\\": "tests/"
     }
   },
+  "minimum-stability": "dev",
   "require": {
     "nikic/fast-route": "^1.3",
     "psr/container": "2.0.x-dev",
