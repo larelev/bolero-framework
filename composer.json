@@ -1,0 +1,36 @@
+{
+  "name": "larelev/funbox",
+  "description": "description",
+  "minimum-stability": "dev",
+  "license": "GPL-3.0-only",
+  "authors": [
+    {
+      "name": "David Blanchard",
+      "email": "dpjb@hotmail.fr"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Funbox\\": "Funbox/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+     "Funbox\\Framework\\Tests\\": "tests/"
+    }
+  },
+  "require": {
+    "nikic/fast-route": "^1.3",
+    "psr/container": "2.0.x-dev",
+    "league/container": "^4.0.0",
+    "symfony/dotenv": "7.1.x-dev",
+    "twig/twig": "^v3.8.0",
+    "doctrine/dbal": "^4.1.x-dev",
+    "ext-pdo": "*",
+    "ext-mbstring": "*"
+  },
+  "require-dev": {
+    "symfony/var-dumper": "^7.0",
+    "phpunit/phpunit": "11.1.x-dev"
+  }
+}
