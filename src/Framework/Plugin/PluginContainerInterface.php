@@ -1,6 +1,6 @@
 <?php
 
-namespace Bolero\Framework\Container;
+namespace Bolero\Framework\Plugin;
 
 use League\Container\DefinitionContainerInterface;
 

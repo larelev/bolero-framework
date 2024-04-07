@@ -30,12 +30,20 @@ class MigrationsMigrate implements CommandInterface
     {
         try
         {
-            $doUp = array_key_exists('u', $params) || array_key_exists('up', $params);
-            $doDown = array_key_exists('d', $params) || array_key_exists('down', $params);
-            $doRemove = array_key_exists('r', $params) || array_key_exists('remove', $params);
-            $doError = array_key_exists('u', $params) && array_key_exists('up', $params);
-            $doError = $doError || (array_key_exists('d', $params) && array_key_exists('down', $params));
-            $doError = $doError || (array_key_exists('r', $params) && array_key_exists('remove', $params));
+
+            $hasU = array_key_exists('u', $params);
+            $hasUp = array_key_exists('up', $params);
+            $hasD = array_key_exists('d', $params);
+            $hasDown = array_key_exists('down', $params);
+            $hasR = array_key_exists('r', $params);
+            $hasRemove = array_key_exists('remove', $params);
+
+            $doUp = $hasU || $hasUp;
+            $doDown = $hasD || $hasDown;
+            $doRemove = $hasR || $hasRemove;
+            $doError = $hasU && $hasUp;
+            $doError = $doError || ($hasD && $hasDown);
+            $doError = $doError || ($hasR && $hasRemove);
             $doError = $doError || ($doUp && $doDown && $doRemove);
             $doNothing = !$doUp && !$doDown && !$doRemove;
 

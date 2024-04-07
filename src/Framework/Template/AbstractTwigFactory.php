@@ -28,13 +28,17 @@ abstract class AbstractTwigFactory
     public function getViewsPaths(): array
     {
         $viewsPaths = [APP_VIEWS_PATH];
+        $additionalPaths = [];
 
         $filename = CONFIG_PATH . 'twig.php';
         if (file_exists($filename)) {
-            $viewsPaths = include $filename;
+            $additionalPaths = include $filename;
         }
 
-        return $viewsPaths;
+        return [
+            ...$viewsPaths,
+            ...$additionalPaths,
+        ];
     }
 
 }

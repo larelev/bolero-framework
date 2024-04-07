@@ -6,7 +6,6 @@ use Bolero\Framework\Console\Commands\CommandInterface;
 use Bolero\Framework\Console\Commands\CommandRunner;
 use Bolero\Framework\Console\Exceptions\ConsoleException;
 use Bolero\Framework\Registry\StateRegistry;
-use Bolero\Framework\Utils\File;
 use League\Container\DefinitionContainerInterface;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
@@ -34,20 +33,30 @@ class Kernel
     private function registerCommands(): void
     {
         $commandsLocations = [
-            (object) [
-                'namespace' => $this->container->get('base-commands-namespace'),
-                'directory' => LIB_PATH . 'Commands',
+            [
+                'directory' => LIB_PATH . "Commands",
+                'namespace' => 'Bolero\\Commands\\',
             ],
-            (object) [
-                'namespace' => $this->container->get('app-commands-namespace'),
-                'directory' => APP_PATH . 'Commands',
+            [
+                'directory' => APP_PATH . "Commands",
+                'namespace' => 'App\\Commands\\',
             ],
+        ];
+        $additionalLocations = [];
+
+        $filename = CONFIG_PATH . 'commands.php';
+        if (file_exists($filename)) {
+            $additionalLocations = include $filename;
+        }
+
+        $commandsLocations = [
+          ...$commandsLocations,
+          ...$additionalLocations,
         ];
 
         foreach ($commandsLocations as $location) {
-            $commandFiles = File::walkTreeFiltered($location->directory, ['php']);
-
-            $iterator = new RecursiveDirectoryIterator($location->directory);
+            $current = (object) $location;
+            $iterator = new RecursiveDirectoryIterator($current->directory);
             $commandFiles = new RecursiveIteratorIterator($iterator, RecursiveIteratorIterator::CHILD_FIRST);
 
             foreach ($commandFiles as $commandFile) {
@@ -55,7 +64,7 @@ class Kernel
                     continue;
                 }
 
-                $this->registerOneCommand($commandFile, $location->namespace, $location->directory);
+                $this->registerOneCommand($commandFile, $current->namespace, $current->directory);
 
             }
         }

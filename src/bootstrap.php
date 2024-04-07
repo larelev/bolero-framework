@@ -29,7 +29,8 @@ define('SERVICES_PATH', CONFIG_PATH . 'services.php');
 define('MIDDLEWARES', CONFIG_PATH . 'middlewares.php');
 define('DATABASE_URL', BASE_PATH . 'var' . DIRECTORY_SEPARATOR . 'migrations.sqlite');
 define('MIGRATIONS_PATH', 'migrations' . DIRECTORY_SEPARATOR);
-define('APP_VIEWS_PATH', APP_PATH . 'views' . DIRECTORY_SEPARATOR);
+define('APP_COMMANDS_PATH', APP_PATH . 'Commands' . DIRECTORY_SEPARATOR);
+define('APP_VIEWS_PATH', APP_PATH . 'Views' . DIRECTORY_SEPARATOR);
 
 require_once BASE_PATH . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
 

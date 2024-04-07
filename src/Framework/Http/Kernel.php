@@ -40,7 +40,7 @@ class Kernel
         }
 
         if ($exception instanceof HttpException) {
-            $response = new Response(content: $exception->getMessage(), status: $exception->getCode());
+            return new Response(content: $exception->getMessage(), status: $exception->getCode());
         }
 
         return new Response(content: 'Server error!', status: HttpStatusCodeEnum::SERVER_ERROR);
