@@ -54,6 +54,7 @@ class Kernel
           ...$additionalLocations,
         ];
 
+        $i = 0;
         foreach ($commandsLocations as $location) {
             $current = (object) $location;
             $iterator = new RecursiveDirectoryIterator($current->directory);
@@ -64,15 +65,16 @@ class Kernel
                     continue;
                 }
 
-                $this->registerOneCommand($commandFile, $current->namespace, $current->directory);
-
+                $this->registerOneCommand($commandFile, $current->namespace, $current->directory, $i > 1);
             }
+            $i++;
         }
 
     }
 
-    private function registerOneCommand(\SplFileInfo $commandFile, string $namespace, string $directory)
+    private function registerOneCommand(\SplFileInfo $commandFile, string $namespace, string $directory, bool $isPluginCommand)
     {
+
         $l = strlen($directory);
 
         $baseDomain = $commandFile->getPath() !== '' ? substr($commandFile->getPath(), $l + 1) : '';
@@ -81,6 +83,13 @@ class Kernel
 
         if (str_contains($category, DIRECTORY_SEPARATOR . 'commands')) {
             $category = str_replace(DIRECTORY_SEPARATOR . 'commands', '', $category);
+        }
+
+        if($isPluginCommand) {
+            $nsParts = explode('\\', $namespace);
+            array_pop($nsParts);
+            array_pop($nsParts);
+            $category = strtolower(array_pop($nsParts)) . ':';
         }
 
         $fqCommandClass = str_replace('/', '\\', $namespace . $domain . $commandFile->getBaseName('.' . $commandFile->getExtension()));
