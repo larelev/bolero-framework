@@ -97,7 +97,7 @@ class Text
             } else if (preg_match($entryRx, $buffer, $matches)) {
                 $convert .= $indent;
                 if ($matches[5] == 'array') {
-                    $convert .= '[';
+                    $convert .= !empty($matches[3]) ? "'" . trim($matches[3], '"') . "'" . ' => [' : '[';
                     $stringLen = strlen($matches[0]) + 1;
                     $buffer = substr($buffer, $stringLen);
                     $offset += $stringLen;
