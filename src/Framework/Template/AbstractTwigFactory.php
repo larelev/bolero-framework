@@ -2,6 +2,7 @@
 
 namespace Bolero\Framework\Template;
 
+use Bolero\Framework\Caching\Cache;
 use Twig\Environment;
 use Twig\Extension\DebugExtension;
 use Twig\Loader\FilesystemLoader;
@@ -15,8 +16,8 @@ abstract class AbstractTwigFactory
         $loader = new FilesystemLoader($templatesPaths);
 
         $twig = new Environment($loader, [
-            'debug' => true,
-            'cache' => false,
+            'debug' => false,
+            'cache' => Cache::CACHE_PATH,
         ]);
         $twig->addExtension(new DebugExtension());
 
@@ -28,13 +29,17 @@ abstract class AbstractTwigFactory
     public function getViewsPaths(): array
     {
         $viewsPaths = [APP_VIEWS_PATH];
+        $additionalPaths = [];
 
         $filename = CONFIG_PATH . 'twig.php';
         if (file_exists($filename)) {
-            $viewsPaths = include $filename;
+            $additionalPaths = include $filename;
         }
 
-        return $viewsPaths;
+        return [
+            ...$viewsPaths,
+            ...$additionalPaths,
+        ];
     }
 
 }
