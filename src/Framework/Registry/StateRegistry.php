@@ -4,7 +4,7 @@ namespace Bolero\Framework\Registry;
 
 class StateRegistry extends AbstractStaticRegistry
 {
-    private static ?\Bolero\Framework\Registry\AbstractRegistryInterface $instance = null;
+    private static ?AbstractRegistryInterface $instance = null;
 
     public static function reset(): void
     {

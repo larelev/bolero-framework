@@ -12,6 +12,7 @@ use Psr\Container\NotFoundExceptionInterface;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use ReflectionClass;
+use ReflectionException;
 use SplFileInfo;
 
 readonly class Kernel
@@ -83,7 +84,7 @@ readonly class Kernel
     }
 
     /**
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     private function registerOneCommand(SplFileInfo $commandFile, string $namespace, string $directory, bool $isPluginCommand): void
     {

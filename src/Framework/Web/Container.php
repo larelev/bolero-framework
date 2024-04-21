@@ -63,7 +63,7 @@ class Container
             ->addArguments([
                 $container,
                 RequestHandlerInterface::class,
-                \Bolero\Framework\Event\EventDispatcher::class,
+                EventDispatcher::class,
             ]);
 
         $container->addShared(EventDispatcher::class);

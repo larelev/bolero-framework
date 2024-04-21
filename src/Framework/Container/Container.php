@@ -7,6 +7,7 @@ use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
 use Psr\Container\NotFoundExceptionInterface;
 use ReflectionClass;
+use ReflectionException;
 
 class Container implements ContainerInterface
 {
@@ -48,7 +49,7 @@ class Container implements ContainerInterface
     }
 
     /**
-     * @throws \ReflectionException
+     * @throws ReflectionException
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      */

@@ -135,7 +135,7 @@ readonly class MigrationsMigrate implements CommandInterface
     }
 
     /**
-     * @throws \Doctrine\DBAL\Exception
+     * @throws DbalException
      */
     private function getAppliedMigrations(): array
     {
@@ -200,7 +200,7 @@ readonly class MigrationsMigrate implements CommandInterface
     }
 
     /**
-     * @throws \Doctrine\DBAL\Exception
+     * @throws DbalException
      */
     private function insertMigration(string $migration): void
     {
@@ -238,7 +238,7 @@ readonly class MigrationsMigrate implements CommandInterface
     }
 
     /**
-     * @throws \Doctrine\DBAL\Exception
+     * @throws DbalException
      */
     private function deleteMigration(string $migration): void
     {

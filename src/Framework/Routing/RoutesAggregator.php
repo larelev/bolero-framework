@@ -4,6 +4,7 @@ namespace Bolero\Framework\Routing;
 
 use Bolero\Framework\Caching\Cache;
 use Bolero\Framework\Utils\Text;
+use ReflectionException;
 use ReflectionFunction;
 use RuntimeException;
 use SplFileObject;
@@ -61,7 +62,7 @@ class RoutesAggregator
     }
 
     /**
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     private function callableToString(callable $controller): string
     {

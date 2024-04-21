@@ -62,7 +62,7 @@ class Container
             ->addArguments([
                 $container,
                 RequestHandlerInterface::class,
-                \Bolero\Framework\Event\EventDispatcher::class,
+                EventDispatcher::class,
             ]);
 
         $container->addShared(EventDispatcher::class);
@@ -70,7 +70,7 @@ class Container
         $container->add(CommandRunner::class)
             ->addArgument($container);
 
-        $container->add(\Bolero\Framework\Console\Kernel::class)
+        $container->add(Kernel::class)
             ->addArguments([$container, CommandRunner::class]);
 
         $container->addShared(
