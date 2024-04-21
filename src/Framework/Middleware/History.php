@@ -9,7 +9,7 @@ use Bolero\Framework\Http\Response;
 class History implements MiddlewareInterface
 {
 
-    public function __construct(private HistoryInterface $history)
+    public function __construct(private readonly HistoryInterface $history)
     {
     }
 

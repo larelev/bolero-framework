@@ -2,86 +2,105 @@
 
 namespace Bolero\Framework\Web;
 
+use Bolero\Framework\Console\Commands\CommandRunner;
+use Bolero\Framework\Console\Kernel;
+use Bolero\Framework\Dbal\ConnectionFactory;
 use Bolero\Framework\Event\EventDispatcher;
+use Bolero\Framework\Logger\Logger;
+use Bolero\Framework\Logger\LoggerInterface;
+use Bolero\Framework\Middleware\ExtractRouteInfo;
+use Bolero\Framework\Middleware\RequestHandler;
+use Bolero\Framework\Middleware\RequestHandlerInterface;
+use Bolero\Framework\Middleware\RouterDispatcher;
+use Bolero\Framework\Routing\Router;
+use Bolero\Framework\Routing\RouterInterface;
+use Bolero\Framework\Routing\RoutesAggregator;
+use Bolero\Framework\Session\Session;
+use Bolero\Framework\Session\SessionInterface;
+use Doctrine\DBAL\Connection;
+use League\Container\Argument\Literal\ArrayArgument;
+use League\Container\Argument\Literal\StringArgument;
 use League\Container\DefinitionContainerInterface;
+use League\Container\ReflectionContainer;
+use Symfony\Component\Dotenv\Dotenv;
 
 class Container
 {
     public static function provide(): DefinitionContainerInterface
     {
         $container = new \League\Container\Container();
-        $container->delegate(new \League\Container\ReflectionContainer(false));
+        $container->delegate(new ReflectionContainer(false));
 
-        $routes = include \Bolero\Framework\Routing\RoutesAggregator::ROUTES_PATH;
-        $dotenv = new \Symfony\Component\Dotenv\Dotenv();
+        $routes = include RoutesAggregator::ROUTES_PATH;
+        $dotenv = new Dotenv();
 
         $dotenv->load(BASE_PATH . '.env');
 
         $appEnv = $_SERVER['APP_ENV'];
 
-        $container->add('APP_ENV', new \League\Container\Argument\Literal\StringArgument($appEnv));
+        $container->add('APP_ENV', new StringArgument($appEnv));
         $container->add('base-commands-namespace',
-            new \League\Container\Argument\Literal\StringArgument('Bolero\\Commands\\'),
+            new StringArgument('Bolero\\Commands\\'),
         );
         $container->add('plugins-commands-namespace',
-            new \League\Container\Argument\Literal\StringArgument('Bolero\\Plugins\\'),
+            new StringArgument('Bolero\\Plugins\\'),
         );
         $container->add('app-commands-namespace',
-            new \League\Container\Argument\Literal\StringArgument('App\\Commands\\'),
+            new StringArgument('App\\Commands\\'),
         );
 
         $container->add(
-            \Bolero\Framework\Routing\RouterInterface::class,
-            \Bolero\Framework\Routing\Router::class,
+            RouterInterface::class,
+            Router::class,
         );
 
         $container->add(
-            \Bolero\Framework\Middleware\RequestHandlerInterface::class,
-            \Bolero\Framework\Middleware\RequestHandler::class
+            RequestHandlerInterface::class,
+            RequestHandler::class
         )->addArgument($container);
 
         $container->add(\Bolero\Framework\Http\Kernel::class)
             ->addArguments([
                 $container,
-                \Bolero\Framework\Middleware\RequestHandlerInterface::class,
+                RequestHandlerInterface::class,
                 \Bolero\Framework\Event\EventDispatcher::class,
             ]);
 
         $container->addShared(EventDispatcher::class);
 
-        $container->add(\Bolero\Framework\Console\Commands\CommandRunner::class)
+        $container->add(CommandRunner::class)
             ->addArgument($container);
 
-        $container->add(\Bolero\Framework\Console\Kernel::class)
-            ->addArguments([$container, \Bolero\Framework\Console\Commands\CommandRunner::class]);
+        $container->add(Kernel::class)
+            ->addArguments([$container, CommandRunner::class]);
 
         $container->addShared(
-            \Bolero\Framework\Session\SessionInterface::class,
-            \Bolero\Framework\Session\Session::class,
+            SessionInterface::class,
+            Session::class,
         );
 
         $container->addShared(
-            \Bolero\Framework\Logger\LoggerInterface::class,
-            \Bolero\Framework\Logger\Logger::class,
+            LoggerInterface::class,
+            Logger::class,
         );
 
-        $container->add(\Bolero\Framework\Dbal\ConnectionFactory::class)
+        $container->add(ConnectionFactory::class)
             ->addArgument(
-                new \League\Container\Argument\Literal\StringArgument(DATABASE_URL)
+                new StringArgument(DATABASE_URL)
             );
 
-        $container->addShared(\Doctrine\DBAL\Connection::class, function () use ($container): \Doctrine\DBAL\Connection {
-            return $container->get(\Bolero\Framework\Dbal\ConnectionFactory::class)->create();
+        $container->addShared(Connection::class, function () use ($container): Connection {
+            return $container->get(ConnectionFactory::class)->create();
         });
 
-        $container->add(\Bolero\Framework\Middleware\RouterDispatcher::class)
+        $container->add(RouterDispatcher::class)
             ->addArguments([
-                \Bolero\Framework\Routing\RouterInterface::class,
+                RouterInterface::class,
                 $container,
             ]);
 
-        $container->add(\Bolero\Framework\Middleware\ExtractRouteInfo::class)
-            ->addArgument(new \League\Container\Argument\Literal\ArrayArgument($routes));
+        $container->add(ExtractRouteInfo::class)
+            ->addArgument(new ArrayArgument($routes));
 
         return $container;
 

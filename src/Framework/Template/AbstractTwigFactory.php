@@ -24,8 +24,6 @@ abstract class AbstractTwigFactory
         return $this->extendsTemplate($twig);
     }
 
-    abstract public static function extendsTemplate(Environment $twig): Environment;
-
     public function getViewsPaths(): array
     {
         $viewsPaths = [APP_VIEWS_PATH];
@@ -41,5 +39,7 @@ abstract class AbstractTwigFactory
             ...$additionalPaths,
         ];
     }
+
+    abstract public static function extendsTemplate(Environment $twig): Environment;
 
 }

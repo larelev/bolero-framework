@@ -2,6 +2,8 @@
 
 namespace Bolero\Framework\Logger;
 
+use RuntimeException;
+
 class Cache
 {
     private const LOG_PATH = VAR_PATH . 'logs' . DIRECTORY_SEPARATOR;
@@ -9,6 +11,7 @@ class Cache
     public const DEBUG_LOG = self::LOG_PATH . 'debug.log';
     public const ERROR_LOG = self::LOG_PATH . 'error.log';
     public const SQL_LOG = self::LOG_PATH . 'sql.log';
+
     public static function prepare(): void
     {
         $ok = file_exists(self::LOG_PATH);
@@ -16,7 +19,7 @@ class Cache
             $ok = mkdir(self::LOG_PATH, 0775);
         }
         if (!$ok) {
-            throw new \RuntimeException('Impossible to create directory' . self::LOG_PATH);
+            throw new RuntimeException('Impossible to create directory' . self::LOG_PATH);
         }
     }
 

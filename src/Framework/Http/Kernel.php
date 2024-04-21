@@ -6,25 +6,36 @@ use Bolero\Framework\Event\EventDispatcher;
 use Bolero\Framework\Http\Event\ResponseEvent;
 use Bolero\Framework\Http\Exceptions\HttpException;
 use Bolero\Framework\Middleware\RequestHandlerInterface;
+use Exception;
 use League\Container\DefinitionContainerInterface;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 
 class Kernel
 {
     private string $appEnv;
 
+    /**
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
+     */
     public function __construct(
-        DefinitionContainerInterface $container,
+        DefinitionContainerInterface             $container,
         private readonly RequestHandlerInterface $requestHandler,
-        private readonly EventDispatcher $dispatcher,
-    ) {
+        private readonly EventDispatcher         $dispatcher,
+    )
+    {
         $this->appEnv = $container->get('APP_ENV');
     }
 
+    /**
+     * @throws Exception
+     */
     public function handle(Request $request): Response
     {
         try {
             $response = $this->requestHandler->handle($request);
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             $response = $this->createExceptionResponse($exception);
         }
 
@@ -33,7 +44,10 @@ class Kernel
         return $response;
     }
 
-    public function createExceptionResponse(\Exception $exception): Response
+    /**
+     * @throws Exception
+     */
+    public function createExceptionResponse(Exception $exception): Response
     {
         if (in_array($this->appEnv, ['dev', 'test'])) {
             throw $exception;

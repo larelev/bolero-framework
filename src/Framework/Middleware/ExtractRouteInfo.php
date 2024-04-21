@@ -2,20 +2,24 @@
 
 namespace Bolero\Framework\Middleware;
 
-use FastRoute\Dispatcher;
-use FastRoute\RouteCollector;
 use Bolero\Framework\Http\Exceptions\HttpMethodException;
 use Bolero\Framework\Http\Exceptions\HttpNotFoundException;
 use Bolero\Framework\Http\Request;
 use Bolero\Framework\Http\Response;
+use FastRoute\Dispatcher;
+use FastRoute\RouteCollector;
 use function FastRoute\simpleDispatcher;
 
 class ExtractRouteInfo implements MiddlewareInterface
 {
-    public function __construct(private array $routes)
+    public function __construct(private readonly array $routes)
     {
     }
 
+    /**
+     * @throws HttpNotFoundException
+     * @throws HttpMethodException
+     */
     public function process(Request $request, RequestHandlerInterface $requestHandler): Response
     {
 

@@ -32,7 +32,7 @@ class Text
         return $text;
     }
 
-    public static function format(string | array | object $string, ...$params): string
+    public static function format(string|array|object $string, ...$params): string
     {
         $result = $string;
 
@@ -109,7 +109,7 @@ class Text
                     $start = $posToken + $lenToken + 2;
 
                     $value = substr($entries, $offset + $start, $len);
-                    $quote = substr($value, 0, 8) == 'function' ? '' : "'";
+                    $quote = str_starts_with($value, 'function') ? '' : "'";
                     $value = $quote == '' ? $value : str_replace("\\", "\\\\", $value);
 
                     if ($j = substr_count($value, PHP_EOL)) {

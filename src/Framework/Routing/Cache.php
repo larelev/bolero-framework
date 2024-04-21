@@ -4,7 +4,7 @@ namespace Bolero\Framework\Routing;
 
 class Cache
 {
-    public static function prepare()
+    public static function prepare(): void
     {
         if (file_exists(RoutesAggregator::ROUTES_PATH)) {
             return;

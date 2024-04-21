@@ -4,6 +4,7 @@ namespace Bolero\Framework\Console;
 
 use Bolero\Framework\Console\Exceptions\ConsoleException;
 use Bolero\Framework\Core\AbstractApplication;
+use Throwable;
 
 class Application extends AbstractApplication
 {
@@ -24,7 +25,7 @@ class Application extends AbstractApplication
         } catch (ConsoleException $exception) {
             echo $exception->getMessage() . PHP_EOL;
             return 0;
-        } catch (\Throwable $throwable) {
+        } catch (Throwable $throwable) {
             echo 'FATAL ERROR: ' . $throwable->getMessage() . PHP_EOL;
             return 1;
         }

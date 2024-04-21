@@ -3,6 +3,10 @@
 namespace Bolero\Framework\Logger;
 
 use Bolero\Framework\Utils\Text;
+use ErrorException;
+use Throwable;
+use function file_exists;
+use function file_get_contents;
 
 class Logger implements LoggerInterface
 {
@@ -29,12 +33,12 @@ class Logger implements LoggerInterface
         $this->debug($message . $separator . print_r($object, true) . PHP_EOL);
     }
 
-    public function debug(string | array | object $message, string $filename = '', int $line = -1): void
+    public function debug(string|array|object $message, string $filename = '', int $line = -1): void
     {
         $this->_log(Cache::DEBUG_LOG, $message, $filename, $line);
     }
 
-    private function _log(string $filepath, string | array | object $message, string $filename = '', int $line = -1): void
+    private function _log(string $filepath, string|array|object $message, string $filename = '', int $line = -1): void
     {
         $message = (is_array($message) || is_object($message)) ? print_r($message, true) : $message;
 
@@ -58,16 +62,16 @@ class Logger implements LoggerInterface
         $this->_log(Cache::INFO_LOG, $message);
     }
 
-    public function sql(string | array | object $message, string $filename = '', int $line = -1): void
+    public function sql(string|array|object $message, string $filename = '', int $line = -1): void
     {
         $this->_log(Cache::SQL_LOG, $message, $filename, $line);
     }
 
-    public function error(\Throwable $ex, string $filename = '', int $line = -1): void
+    public function error(Throwable $ex, string $filename = '', int $line = -1): void
     {
         $message = '';
 
-        if ($ex instanceof \ErrorException) {
+        if ($ex instanceof ErrorException) {
             $message .= 'Error severity: ' . $ex->getSeverity() . PHP_EOL;
         }
         $message .= 'Error code: ' . $ex->getCode() . PHP_EOL;
@@ -80,34 +84,34 @@ class Logger implements LoggerInterface
 
     public function getInfoLog(): string
     {
-        if (!\file_exists(Cache::INFO_LOG)) {
+        if (!file_exists(Cache::INFO_LOG)) {
             return '';
         }
-        return \file_get_contents(Cache::INFO_LOG);
+        return file_get_contents(Cache::INFO_LOG);
     }
 
     public function getDebugLog(): string
     {
-        if (!\file_exists(Cache::DEBUG_LOG)) {
+        if (!file_exists(Cache::DEBUG_LOG)) {
             return '';
         }
-        return \file_get_contents(Cache::DEBUG_LOG);
+        return file_get_contents(Cache::DEBUG_LOG);
     }
 
     public function getErrorLog(): string
     {
-        if (!\file_exists(Cache::ERROR_LOG)) {
+        if (!file_exists(Cache::ERROR_LOG)) {
             return '';
         }
-        return \file_get_contents(Cache::ERROR_LOG);
+        return file_get_contents(Cache::ERROR_LOG);
     }
 
     public function getSqlLog(): string
     {
-        if (!\file_exists(Cache::SQL_LOG)) {
+        if (!file_exists(Cache::SQL_LOG)) {
             return '';
         }
-        return \file_get_contents(Cache::SQL_LOG);
+        return file_get_contents(Cache::SQL_LOG);
     }
 
     public function clearAll(): void

@@ -1,7 +1,8 @@
 <?php
+
 namespace Bolero\Framework;
 
-$document_root = isset($_SERVER['DOCUMENT_ROOT']) && !empty($_SERVER['DOCUMENT_ROOT']) ? $_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR : '';
+$document_root = !empty($_SERVER['DOCUMENT_ROOT']) ? $_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR : '';
 
 define('IS_WEB_APP', $document_root !== '');
 define('IS_CLI_APP', !IS_WEB_APP);

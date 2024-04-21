@@ -7,7 +7,7 @@ use Throwable;
 
 class ConsoleException extends BaseException
 {
-    public function __construct(string $message, int $code = 0, null | Throwable $previous = null, ...$params)
+    public function __construct(string $message, int $code = 0, null|Throwable $previous = null, ...$params)
     {
         parent::__construct(
             'An Console exception occurred with the message:%s %s',

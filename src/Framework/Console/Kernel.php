@@ -7,19 +7,29 @@ use Bolero\Framework\Console\Commands\CommandRunner;
 use Bolero\Framework\Console\Exceptions\ConsoleException;
 use Bolero\Framework\Registry\StateRegistry;
 use League\Container\DefinitionContainerInterface;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
+use ReflectionClass;
+use SplFileInfo;
 
-class Kernel
+readonly class Kernel
 {
     public function __construct(
-        private readonly DefinitionContainerInterface $container,
-        private readonly CommandRunner $commandRunner
-    ) {
+        private DefinitionContainerInterface $container,
+        private CommandRunner                $commandRunner
+    )
+    {
     }
 
     /**
+     * @param array $argv
+     * @param int $argc
+     * @return int
      * @throws ConsoleException
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
      */
     public function handle(array $argv, int $argc): int
     {
@@ -50,13 +60,13 @@ class Kernel
         }
 
         $commandsLocations = [
-          ...$commandsLocations,
-          ...$additionalLocations,
+            ...$commandsLocations,
+            ...$additionalLocations,
         ];
 
         $i = 0;
         foreach ($commandsLocations as $location) {
-            $current = (object) $location;
+            $current = (object)$location;
             $iterator = new RecursiveDirectoryIterator($current->directory);
             $commandFiles = new RecursiveIteratorIterator($iterator, RecursiveIteratorIterator::CHILD_FIRST);
 
@@ -72,7 +82,10 @@ class Kernel
 
     }
 
-    private function registerOneCommand(\SplFileInfo $commandFile, string $namespace, string $directory, bool $isPluginCommand)
+    /**
+     * @throws \ReflectionException
+     */
+    private function registerOneCommand(SplFileInfo $commandFile, string $namespace, string $directory, bool $isPluginCommand): void
     {
 
         $l = strlen($directory);
@@ -85,7 +98,7 @@ class Kernel
             $category = str_replace(DIRECTORY_SEPARATOR . 'commands', '', $category);
         }
 
-        if($isPluginCommand) {
+        if ($isPluginCommand) {
             $nsParts = explode('\\', $namespace);
             array_pop($nsParts);
             array_pop($nsParts);
@@ -98,7 +111,7 @@ class Kernel
             return;
         }
 
-        $class = new \ReflectionClass($fqCommandClass);
+        $class = new ReflectionClass($fqCommandClass);
 
         $attributesArgs = [];
         $attributes = $class->getAttributes();

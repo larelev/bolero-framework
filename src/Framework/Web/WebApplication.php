@@ -3,8 +3,12 @@
 namespace Bolero\Framework\Web;
 
 use Bolero\Framework\Core\AbstractApplication;
+use Bolero\Framework\Http\History;
+use Bolero\Framework\Http\HistoryInterface;
 use Bolero\Framework\Http\Kernel;
 use Bolero\Framework\Http\Request;
+use Bolero\Framework\MVC\AbstractController;
+use Bolero\Framework\Template\TwigFactory;
 
 class WebApplication extends AbstractApplication
 {
@@ -19,20 +23,20 @@ class WebApplication extends AbstractApplication
 
         $container = require BASE_PATH . 'Bootstrap' . DIRECTORY_SEPARATOR . 'web.php';
 
-        $container->add(\Bolero\Framework\MVC\AbstractController::class);
+        $container->add(AbstractController::class);
 
-        $inflector = $container->inflector(\Bolero\Framework\MVC\AbstractController::class);
+        $inflector = $container->inflector(AbstractController::class);
         $inflector->invokeMethod('setContainer', [$container]);
         $inflector->invokeMethod('setRequest', [$request]);
 
         $container->addShared(
-            \Bolero\Framework\Http\HistoryInterface::class,
-            \Bolero\Framework\Http\History::class,
+            HistoryInterface::class,
+            History::class,
         );
 
         $filename = BASE_PATH . 'Factories' . DIRECTORY_SEPARATOR . 'TwigFactory.php';
         if (!file_exists($filename)) {
-            $container->add('template-renderer-factory', \Bolero\Framework\Template\TwigFactory::class);
+            $container->add('template-renderer-factory', TwigFactory::class);
         }
 
         $container->addShared('twig', function () use ($container) {

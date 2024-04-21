@@ -10,6 +10,7 @@ class CommandArgs
     public function __construct(
         public array $short = [],
         public array $long = []
-    ) {
+    )
+    {
     }
 }

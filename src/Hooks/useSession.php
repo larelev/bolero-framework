@@ -2,7 +2,9 @@
 
 namespace Bolero\Hooks;
 
-function useSession()
+use Bolero\Framework\Session\Session;
+
+function useSession(): Session
 {
-    return new \Bolero\Framework\Session\Session();
+    return new Session();
 }

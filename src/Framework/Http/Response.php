@@ -2,13 +2,16 @@
 
 namespace Bolero\Framework\Http;
 
+use Exception;
+
 class Response
 {
     public function __construct(
-        private ?string $content = '',
-        private HttpStatusCodeEnum | int $status = 200,
-        private array $headers = [],
-    ) {
+        private ?string                $content = '',
+        private HttpStatusCodeEnum|int $status = 200,
+        private array                  $headers = [],
+    )
+    {
     }
 
     public function getContent(): string
@@ -21,7 +24,7 @@ class Response
         $this->content = $content;
     }
 
-    public function getStatus(): int | HttpStatusCodeEnum
+    public function getStatus(): int|HttpStatusCodeEnum
     {
         $status = $this->status;
         if ($this->status instanceof HttpStatusCodeEnum) {
@@ -30,7 +33,7 @@ class Response
         return $status;
     }
 
-    public function setStatus(int | HttpStatusCodeEnum $status): void
+    public function setStatus(int|HttpStatusCodeEnum $status): void
     {
         $this->status = $status;
     }
@@ -69,7 +72,7 @@ class Response
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     protected function buildHeader(string $header): string
     {
@@ -82,7 +85,7 @@ class Response
         }
 
         if ($result == '') {
-            throw new \Exception('Header not found!');
+            throw new Exception('Header not found!');
         }
 
         return $result;

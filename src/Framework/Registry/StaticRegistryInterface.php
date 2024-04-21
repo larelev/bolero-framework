@@ -2,8 +2,6 @@
 
 namespace Bolero\Framework\Registry;
 
-use Bolero\Framework\Registry\AbstractRegistryInterface;
-
 interface StaticRegistryInterface
 {
     public static function getInstance(): AbstractRegistryInterface;

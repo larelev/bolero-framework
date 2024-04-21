@@ -4,19 +4,20 @@ namespace Bolero\Framework\Middleware;
 
 use Bolero\Framework\Http\Request;
 use Bolero\Framework\Http\Response;
-use Bolero\Framework\Session\Session;
 use Bolero\Framework\Session\SessionInterface;
+use Exception;
 
 readonly class SessionManager implements MiddlewareInterface
 {
 
     public function __construct(
         private SessionInterface $session
-    ) {
+    )
+    {
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public function process(Request $request, RequestHandlerInterface $requestHandler): Response
     {

@@ -2,10 +2,11 @@
 
 namespace Bolero\Framework\Container\Exceptions;
 
+use Exception;
 use Psr\Container\ContainerExceptionInterface;
 use Throwable;
 
-class ContainerException extends \Exception implements ContainerExceptionInterface
+class ContainerException extends Exception implements ContainerExceptionInterface
 {
     public function __construct(string $message = "", int $code = 0, ?Throwable $previous = null)
     {

@@ -2,7 +2,8 @@
 
 namespace Bolero\Framework\Http;
 
-enum HttpStatusCodeEnum: int {
+enum HttpStatusCodeEnum: int
+{
     case OK = 200;
     case TEMPORARY_REDIRECT = 301;
     case PERMANENT_REDIRECT = 302;

@@ -7,9 +7,6 @@ class EventDispatcher implements EventDispatcherInterface
 
     private iterable $listeners = [];
 
-    /**
-     * @inheritDoc
-     */
     public function dispatch(StoppableEventInterface $event): StoppableEventInterface
     {
         // TODO: Implement dispatch() method.
@@ -25,15 +22,8 @@ class EventDispatcher implements EventDispatcherInterface
         return $event;
     }
 
-    public function addListener(string $eventName, callable $listener): EventDispatcher
-    {
-        $this->listeners[$eventName][] = $listener;
-
-        return $this;
-    }
-
     /**
-     * @param object $event
+     * @param StoppableEventInterface $event
      *   An event for which to return the relevant listeners.
      * @return iterable<callable>
      *   An iterable (array, iterator, or generator) of callables.  Each
@@ -47,5 +37,12 @@ class EventDispatcher implements EventDispatcherInterface
         }
 
         return [];
+    }
+
+    public function addListener(string $eventName, callable $listener): EventDispatcher
+    {
+        $this->listeners[$eventName][] = $listener;
+
+        return $this;
     }
 }

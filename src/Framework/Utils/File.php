@@ -8,7 +8,7 @@ use RecursiveIteratorIterator;
 
 class File
 {
-    public static function walkTreeFiltered($path, $filter = [], $noDepth = false)
+    public static function walkTreeFiltered($path, $filter = [], $noDepth = false): array
     {
         $result = [];
 
@@ -59,20 +59,20 @@ class File
         return $result;
     }
 
-    public static function walkTree(string $path, array &$tree = [])
+    public static function walkTree(string $path, array &$tree = []): int
     {
         $class_func = array(__CLASS__, __FUNCTION__);
         return is_file($path) ?
-        @array_push($tree, $path) :
-        array_map($class_func, glob($path . '/*'), $tree);
+            @array_push($tree, $path) :
+            array_map($class_func, glob($path . '/*'), $tree);
     }
 
     public static function delTree(string $path): bool
     {
         $class_func = array(__CLASS__, __FUNCTION__);
         return is_file($path) ?
-        @unlink($path) :
-        array_map($class_func, glob($path . '/*')) == @rmdir($path);
+            @unlink($path) :
+            array_map($class_func, glob($path . '/*')) == @rmdir($path);
     }
 
     public static function safeMkDir(string $directory): bool

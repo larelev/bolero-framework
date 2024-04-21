@@ -9,11 +9,13 @@
       "Bolero\\": "src/"
     }
   },
-  "authors": [{
-    "name": "David Blanchard",
-    "email": "dpjb@hotmail.fr",
-    "role": "Creator"
-  }],
+  "authors": [
+    {
+      "name": "David Blanchard",
+      "email": "dpjb@hotmail.fr",
+      "role": "Creator"
+    }
+  ],
   "autoload-dev": {
     "psr-4": {
       "Bolero\\Framework\\Tests\\": "tests/"
@@ -28,7 +30,8 @@
     "twig/twig": "^v3.8.0",
     "doctrine/dbal": "^4.1.x-dev",
     "ext-pdo": "*",
-    "ext-mbstring": "*"
+    "ext-mbstring": "*",
+    "ext-iconv": "*"
   },
   "require-dev": {
     "symfony/var-dumper": "^7.0",

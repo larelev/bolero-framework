@@ -11,9 +11,10 @@ readonly class RouterDispatcher implements MiddlewareInterface
 {
 
     public function __construct(
-        private RouterInterface $router,
+        private RouterInterface              $router,
         private DefinitionContainerInterface $container
-    ) {
+    )
+    {
     }
 
     public function process(Request $request, RequestHandlerInterface $requestHandler): Response

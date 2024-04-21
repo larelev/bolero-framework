@@ -4,13 +4,13 @@ namespace Bolero\Framework\Session;
 
 interface SessionInterface
 {
-    public function getId(): false | string;
+    public function getId(): false|string;
 
-    public function getCookie(): false | string;
+    public function getCookie(): false|string;
 
     public function isActive(): bool;
 
-    public function start(string $id = '', array $options = []): false | string;
+    public function start(string $id = '', array $options = []): false|string;
 
     public function has(string $key): bool;
 

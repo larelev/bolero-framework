@@ -2,13 +2,14 @@
 
 namespace Bolero\Framework\Utils;
 
+use DateTimeImmutable;
 use Random\Randomizer;
 
 class Misc
 {
     public static function makeId(): int
     {
-        $dti = new \DateTimeImmutable();
+        $dti = new DateTimeImmutable();
         $ts = $dti->getTimestamp();
         $string = str_split($ts);
 

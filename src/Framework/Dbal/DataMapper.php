@@ -2,20 +2,23 @@
 
 namespace Bolero\Framework\Dbal;
 
-use Doctrine\DBAL\Connection;
 use Bolero\Framework\Dbal\Events\SaveEvent;
 use Bolero\Framework\Event\EventDispatcher;
+use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\Exception;
 
 abstract class DataMapper
 {
     public function __construct(
-        protected Connection $connection,
+        protected Connection      $connection,
         protected EventDispatcher $dispatcher,
-    ) {
+    )
+    {
     }
 
-    abstract public function insert(Entity &$entity): void;
-
+    /**
+     * @throws Exception
+     */
     public function save(Entity $entity): void
     {
         $this->insert($entity);
@@ -23,4 +26,6 @@ abstract class DataMapper
         $entity->setId($id);
         $this->dispatcher->dispatch(new SaveEvent($entity));
     }
+
+    abstract public function insert(Entity &$entity): void;
 }

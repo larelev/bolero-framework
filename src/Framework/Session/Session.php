@@ -2,23 +2,18 @@
 
 namespace Bolero\Framework\Session;
 
-use Bolero\Framework\Logger\Logger;
+use Random\RandomException;
 
 final class Session implements SessionInterface
 {
     public const CSRF_TOKEN = 'CSRF-TOKEN';
     public const SESSION_ID = 'SESSION-ID';
 
-    public function getId(): false | string
+    public function getId(): false|string
     {
         return session_id();
     }
 
-    public function getCookie(): false | string
-    {
-        $name = session_name();
-        return !isset($_COOKIE[$name]) ? false : $_COOKIE[$name];
-    }
     public function isActive(): bool
     {
         return !empty(session_id());
@@ -29,7 +24,10 @@ final class Session implements SessionInterface
         return session_status() == PHP_SESSION_ACTIVE && isset($_SESSION[$key]);
     }
 
-    public function start(string $id = '', array $options = []): false | string
+    /**
+     * @throws RandomException
+     */
+    public function start(string $id = '', array $options = []): false|string
     {
         $status = session_status();
         $none = PHP_SESSION_NONE;
@@ -56,6 +54,12 @@ final class Session implements SessionInterface
         }
 
         return session_id();
+    }
+
+    public function getCookie(): false|string
+    {
+        $name = session_name();
+        return !isset($_COOKIE[$name]) ? false : $_COOKIE[$name];
     }
 
     public function read(string $key): mixed

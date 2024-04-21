@@ -12,7 +12,18 @@ class RequestInfo implements RequestInfoInterface
     private string $pathInfo;
     private string $method;
 
-    public function getGetParams(string $param = ''): array | string
+    public function __construct()
+    {
+        $this->getParams = $_GET;
+        $this->postParams = $_POST;
+        $this->cookies = $_COOKIE;
+        $this->files = $_FILES;
+        $this->server = $_SERVER;
+        $this->pathInfo = strtok($this->server['REQUEST_URI'], '?');
+        $this->method = $this->server['REQUEST_METHOD'];
+    }
+
+    public function getGetParams(string $param = ''): array|string
     {
         if ($param == '') {
             return $this->getParams;
@@ -21,7 +32,7 @@ class RequestInfo implements RequestInfoInterface
         return !isset($this->getParams[$param]) ? '' : $this->getParams[$param];
     }
 
-    public function getPostParams(string $param = ''): array | string
+    public function getPostParams(string $param = ''): array|string
     {
         if ($param == '') {
             return $this->postParams;
@@ -30,7 +41,7 @@ class RequestInfo implements RequestInfoInterface
         return !isset($this->postParams[$param]) ? '' : $this->postParams[$param];
     }
 
-    public function getCookies($name = ''): array | string
+    public function getCookies($name = ''): array|string
     {
         if ($name == '') {
             return $this->cookies;
@@ -57,16 +68,5 @@ class RequestInfo implements RequestInfoInterface
     public function getMethod(): string
     {
         return $this->method;
-    }
-
-    public function __construct(
-    ) {
-        $this->getParams = $_GET;
-        $this->postParams = $_POST;
-        $this->cookies = $_COOKIE;
-        $this->files = $_FILES;
-        $this->server = $_SERVER;
-        $this->pathInfo = strtok($this->server['REQUEST_URI'], '?');
-        $this->method = $this->server['REQUEST_METHOD'];
     }
 }

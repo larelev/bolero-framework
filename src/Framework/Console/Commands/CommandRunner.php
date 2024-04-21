@@ -3,14 +3,15 @@
 namespace Bolero\Framework\Console\Commands;
 
 use Bolero\Framework\Console\Exceptions\ConsoleException;
+use Exception;
 use League\Container\DefinitionContainerInterface;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 
-class CommandRunner
+readonly class CommandRunner
 {
 
-    public function __construct(private readonly DefinitionContainerInterface $container)
+    public function __construct(private DefinitionContainerInterface $container)
     {
     }
 
@@ -18,7 +19,7 @@ class CommandRunner
      * @throws ConsoleException
      * @throws NotFoundExceptionInterface
      * @throws ContainerExceptionInterface
-     * @throws \Exception
+     * @throws Exception
      */
     public function run(array $argv, int $argc): int
     {
@@ -41,7 +42,7 @@ class CommandRunner
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     private function parseOptions(array $args, int $count, array $shortOptions, array $longOptions): array
     {
@@ -53,30 +54,30 @@ class CommandRunner
                 [$key, $value] = explode('=', substr($current, 2));
 
                 if (!in_array($key, $longOptions)) {
-                    throw new \Exception('Unknown parameter ' . $key . '!');
+                    throw new Exception('Unknown parameter ' . $key . '!');
                 }
                 $result[$key] = $value;
             } else
-            if (str_starts_with($current, '--') && !str_contains($current, '=')) {
-                $key = substr($current, 2);
+                if (str_starts_with($current, '--') && !str_contains($current, '=')) {
+                    $key = substr($current, 2);
 
-                if (!in_array($key, $longOptions)) {
-                    throw new \Exception('Unknown parameter ' . $key . '!');
-                }
-                $result[$key] = null;
-            } else
-            if (str_starts_with($current, '-')) {
-                $next = $i + 1 < $count ? $args[$i + 1] : '';
+                    if (!in_array($key, $longOptions)) {
+                        throw new Exception('Unknown parameter ' . $key . '!');
+                    }
+                    $result[$key] = null;
+                } else
+                    if (str_starts_with($current, '-')) {
+                        $next = $i + 1 < $count ? $args[$i + 1] : '';
 
-                $key = substr($current, 1);
+                        $key = substr($current, 1);
 
-                if (!in_array($key, $shortOptions)) {
-                    throw new \Exception('Unknown parameter ' . $key . '!');
-                }
-                $value = str_starts_with($next, '-') ? null : ($next == '' ? null : $next);
+                        if (!in_array($key, $shortOptions)) {
+                            throw new Exception('Unknown parameter ' . $key . '!');
+                        }
+                        $value = str_starts_with($next, '-') ? null : ($next == '' ? null : $next);
 
-                $result[$key] = $value;
-            }
+                        $result[$key] = $value;
+                    }
         }
 
         return $result;

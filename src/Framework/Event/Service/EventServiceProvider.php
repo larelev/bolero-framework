@@ -21,7 +21,7 @@ class EventServiceProvider implements ServiceProviderInterface
 
     ];
 
-    public function __construct(private EventDispatcher $dispatcher)
+    public function __construct(private readonly EventDispatcher $dispatcher)
     {
     }
 

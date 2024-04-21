@@ -5,6 +5,7 @@ namespace Bolero\Framework\Routing;
 use Bolero\Framework\Caching\Cache;
 use Bolero\Framework\Utils\Text;
 use ReflectionFunction;
+use RuntimeException;
 use SplFileObject;
 
 class RoutesAggregator
@@ -13,7 +14,16 @@ class RoutesAggregator
     public const ROUTES_ARRAY_PATH = Cache::CACHE_PATH . 'routes.txt';
     public const ROUTES_PATH = Cache::CACHE_PATH . 'routes.php';
 
-    function aggregate(string $method, string $route, array | callable $controller, ?array $middlewares = null): void
+    public static function writeRuntimeFile(): void
+    {
+        $json = file_get_contents(self::ROUTES_JSON_PATH);
+
+        $routes = Text::jsonToPhpReturnedArray($json);
+
+        file_put_contents(self::ROUTES_PATH, $routes);
+    }
+
+    function aggregate(string $method, string $route, array|callable $controller, ?array $middlewares = null): void
     {
         $this->prepareCacheIfNotExists();
 
@@ -36,7 +46,24 @@ class RoutesAggregator
 
         file_put_contents(self::ROUTES_JSON_PATH, $json);
     }
-    private function callableToString(callable $controller)
+
+    private function prepareCacheIfNotExists(): void
+    {
+        if (file_exists(self::ROUTES_JSON_PATH)) {
+            return;
+        }
+
+        if (!touch(self::ROUTES_JSON_PATH)) {
+            throw new RuntimeException('Impossible to write ' . self::ROUTES_JSON_PATH . ' file.');
+        }
+
+        file_put_contents(self::ROUTES_JSON_PATH, '[]');
+    }
+
+    /**
+     * @throws \ReflectionException
+     */
+    private function callableToString(callable $controller): string
     {
         $ref = new ReflectionFunction($controller);
 
@@ -54,28 +81,6 @@ class RoutesAggregator
         $code = substr($code, $begin, $end - $begin + 1);
 
         return $code;
-    }
-
-    private function prepareCacheIfNotExists(): void
-    {
-        if (file_exists(self::ROUTES_JSON_PATH)) {
-            return;
-        }
-
-        if (!touch(self::ROUTES_JSON_PATH)) {
-            throw new \RuntimeException('Impossible to write ' . self::ROUTES_JSON_PATH . ' file.');
-        }
-
-        file_put_contents(self::ROUTES_JSON_PATH, '[]');
-    }
-
-    public static function writeRuntimeFile()
-    {
-        $json = file_get_contents(self::ROUTES_JSON_PATH);
-
-        $routes = Text::jsonToPhpReturnedArray($json);
-
-        file_put_contents(self::ROUTES_PATH, $routes);
     }
 
 }

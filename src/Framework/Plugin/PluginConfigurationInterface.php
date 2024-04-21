@@ -2,8 +2,6 @@
 
 namespace Bolero\Framework\Plugin;
 
-use League\Container\DefinitionContainerInterface;
-
 interface PluginConfigurationInterface
 {
     public static function viewsPath(): string;

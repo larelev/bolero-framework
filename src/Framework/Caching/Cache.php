@@ -2,6 +2,8 @@
 
 namespace Bolero\Framework\Caching;
 
+use RuntimeException;
+
 class Cache
 {
     public const CACHE_PATH = VAR_PATH . 'cache' . DIRECTORY_SEPARATOR;
@@ -13,7 +15,7 @@ class Cache
             $ok = mkdir(self::CACHE_PATH, 0775);
         }
         if (!$ok) {
-            throw new \RuntimeException('Impossible to create directory' . self::CACHE_PATH);
+            throw new RuntimeException('Impossible to create directory' . self::CACHE_PATH);
         }
     }
 }
