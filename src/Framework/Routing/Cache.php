@@ -9,7 +9,7 @@ class Cache
         if (file_exists(RoutesAggregator::ROUTES_PATH)) {
             return;
         }
-        require APP_PATH . 'routes' . DIRECTORY_SEPARATOR . 'Web.php';
+        require APP_PATH . 'Routes' . DIRECTORY_SEPARATOR . 'Web.php';
         RoutesAggregator::writeRuntimeFile();
     }
 }

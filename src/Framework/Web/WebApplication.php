@@ -21,7 +21,7 @@ class WebApplication extends AbstractApplication
     {
         $request = new Request();
 
-        $container = require BASE_PATH . 'Bootstrap' . DIRECTORY_SEPARATOR . 'web.php';
+        $container = require BASE_PATH . 'bootstrap' . DIRECTORY_SEPARATOR . 'web.php';
 
         $container->add(AbstractController::class);
 

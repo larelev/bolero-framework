@@ -2,7 +2,7 @@
 
 namespace Bolero\Framework\Event\Service;
 
-use App\events\ContentLengthListener;
+use App\Events\ContentLengthListener;
 use App\Events\InternalErrorListener;
 use Bolero\Framework\Dbal\Events\SaveEvent;
 use Bolero\Framework\Event\EventDispatcher;
