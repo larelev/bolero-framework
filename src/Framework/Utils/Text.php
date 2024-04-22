@@ -68,7 +68,7 @@ class Text
         $indentsLengths = [];
         $convert = '';
 
-        $re = '/(.*)(\[[\w"-\/\\\\]+\]=>)(\n)( +)/';
+        $re = '/(.*)(\[[\w"-\/\\\\]+]=>)(\n)( +)/';
         $subst = "$1$2";
         $entries = preg_replace($re, $subst, $dump);
         $buffer = $entries;
@@ -81,16 +81,19 @@ class Text
             $indentsLengths[] = count($match) > 1 ? strlen($match[0]) : 0;
         }
 
+        $entryRx = '/( ?+)+(\[([\w"-\/\\\\]+)]=>)?((array|string|int|float|bool)\(([\w.]+)\) ?(.*)\n)/';
+        $closeArrayRx = '/^( ?+)+}/';
+
         $l = count($indentsLengths);
         for ($i = 0; $i < $l; $i++) {
             $indentLen = $indentsLengths[$i];
             $indent = $indentLen > 0 ? str_repeat(' ', $indentLen) : '';
-            $entryRx = '/( ?+)+(\[([\w"-\/\\\\]+)\]=>)?((array|string|int|float|bool)\(([\w.]+)\) ?(.*)\n)/';
-            $closeArrayRx = '/^( ?+)+}/';
+
+
 
             if (preg_match($closeArrayRx, $buffer, $matches)) {
                 $convert .= $indent . ']' . ($indent == '' ? '' : ',');
-                $convert .= PHP_EOL;
+                $convert .= "\n";
                 $stringLen = strlen($matches[0]) + 1;
                 $buffer = substr($buffer, $stringLen);
                 $offset += $stringLen;
@@ -112,7 +115,7 @@ class Text
                     $quote = str_starts_with($value, 'function') ? '' : "'";
                     $value = $quote == '' ? $value : str_replace("\\", "\\\\", $value);
 
-                    if ($j = substr_count($value, PHP_EOL)) {
+                    if ($j = substr_count($value, "\n")) {
                         $i += $j;
                     }
                     if (str_starts_with($matches[3], '"')) {
@@ -138,7 +141,7 @@ class Text
                     $buffer = substr($buffer, $stringLen);
                     $offset += $stringLen;
                 }
-                $convert .= PHP_EOL;
+                $convert .= "\n";
 
             }
         }
